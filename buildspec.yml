@@ -12,3 +12,4 @@ phases:
     commands:
       - cd build
       - aws s3 sync . s3://jtamu-google-login-front-bucket01 --delete
+      - aws cloudfront create-invalidation --distribution-id ECFH767E363LU --paths "/*"
