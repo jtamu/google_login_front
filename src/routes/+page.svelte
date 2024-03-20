@@ -1,4 +1,4 @@
-<script>
+<script lang="ts">
 	function login() {
 		const params = {
 			response_type: 'code',
@@ -8,6 +8,10 @@
 			state: Math.random().toString(32).substring(2),
 			nonce: Math.random().toString(32).substring(2)
 		};
+
+		sessionStorage.setItem('state', params.state);
+		sessionStorage.setItem('nonce', params.nonce);
+
 		const href = `https://accounts.google.com/o/oauth2/v2/auth?response_type=${params.response_type}&client_id=${params.client_id}&scope=${params.scope}&redirect_uri=${params.redirect_uri}&state=${params.state}&nonce=${params.nonce}`;
 		location.href = href;
 	}
