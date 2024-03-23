@@ -18,6 +18,9 @@
 			code: queryParams.code,
 		});
 		console.log(res);
+
+		const userInfoRes = await axios.get('https://openidconnect.googleapis.com/v1/userinfo', {headers: {Authorization: `Bearer ${res.data.access_token}`}});
+		console.log(userInfoRes);
 	});
 </script>
 
