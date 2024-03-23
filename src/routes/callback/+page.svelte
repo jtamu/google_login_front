@@ -1,8 +1,9 @@
 <script lang="ts">
 	import { error } from '@sveltejs/kit';
-	import axios from 'axios';
+	import axios, { type AxiosResponse } from 'axios';
 	import { onMount } from 'svelte';
 	let queryParams;
+	let userInfoRes: AxiosResponse;
 
 	onMount(async () => {
 		const params = new URLSearchParams(window.location.search);
@@ -17,11 +18,11 @@
 		const res = await axios.post('https://nfk13r40e6.execute-api.ap-northeast-1.amazonaws.com/api/get_token', {
 			code: queryParams.code,
 		});
-		console.log(res);
 
-		const userInfoRes = await axios.get('https://openidconnect.googleapis.com/v1/userinfo', {headers: {Authorization: `Bearer ${res.data.access_token}`}});
+		userInfoRes = await axios.get('https://openidconnect.googleapis.com/v1/userinfo', {headers: {Authorization: `Bearer ${res.data.access_token}`}});
 		console.log(userInfoRes);
 	});
 </script>
 
-<h1>Callback</h1>
+<h1>{userInfoRes.data.name}</h1>
+<img src={userInfoRes.data.picture} alt="facePicture" />
