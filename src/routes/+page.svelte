@@ -1,5 +1,12 @@
 <script lang="ts">
-	function login() {
+	import axios from "axios";
+
+	async function login() {
+		// ディスカバリドキュメントを参照
+		const discoverRes = await axios.get('https://accounts.google.com/.well-known/openid-configuration');
+		sessionStorage.setItem('discoverDoc', JSON.stringify(discoverRes.data));
+
+		// 認可エンドポイントへのリクエストパラメータ設定
 		const params = {
 			response_type: 'code',
 			client_id: '720487762083-hbm6v2q5loampnkcsicc0d0303lsksom.apps.googleusercontent.com',
@@ -12,7 +19,8 @@
 		sessionStorage.setItem('state', params.state);
 		sessionStorage.setItem('nonce', params.nonce);
 
-		const href = `https://accounts.google.com/o/oauth2/v2/auth?response_type=${params.response_type}&client_id=${params.client_id}&scope=${params.scope}&redirect_uri=${params.redirect_uri}&state=${params.state}&nonce=${params.nonce}`;
+		// 認可エンドポイントへ遷移
+		const href = `${discoverRes.data.authorization_endpoint}?response_type=${params.response_type}&client_id=${params.client_id}&scope=${params.scope}&redirect_uri=${params.redirect_uri}&state=${params.state}&nonce=${params.nonce}`;
 		location.href = href;
 	}
 </script>
