@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { error } from "@sveltejs/kit";
 	import axios, { type AxiosResponse } from "axios";
 	import { onMount } from "svelte";
 	let userInfoRes: AxiosResponse;
@@ -12,6 +13,14 @@
             const [key, value] = keyValue.split('=');
             fragmentArgs[decodeURIComponent(key)] = decodeURIComponent(value);
         }
+        console.log(fragmentArgs);
+
+		// 送られてきたstateが一致しているか確認
+		const sessionState = sessionStorage.getItem('state');
+
+		if (fragmentArgs.state != sessionState) {
+			error(401, { message: 'Invalid state parameter.' });
+		}
 
         // userinfoエンドポイントにアクセス
 		const discoverDoc = JSON.parse(sessionStorage.getItem('discoverDoc') ?? '');
