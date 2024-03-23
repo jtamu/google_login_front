@@ -24,5 +24,5 @@
 	});
 </script>
 
-<h1>{userInfoRes.data.name}</h1>
-<img src={userInfoRes.data.picture} alt="facePicture" />
+<h1>{userInfoRes?.data?.name}</h1>
+<img src={userInfoRes?.data?.picture} alt="facePicture" />
