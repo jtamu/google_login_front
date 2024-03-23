@@ -24,5 +24,9 @@
 	});
 </script>
 
-<h1>{userInfoRes?.data?.name}</h1>
-<img src={userInfoRes?.data?.picture} alt="facePicture" />
+{#if userInfoRes}
+	<h1>{userInfoRes.data?.name}</h1>
+	<img src={userInfoRes.data?.picture} alt="facePicture" />
+{:else}
+	<h1>ログインしています...</h1>
+{/if}
