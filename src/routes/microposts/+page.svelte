@@ -31,6 +31,8 @@
         // リロード
         micropostRes = await axios.get('https://nfk13r40e6.execute-api.ap-northeast-1.amazonaws.com/api/microposts', {headers: {Authorization: `Bearer ${id_token}`}});
         console.log(micropostRes);
+        // インプットを空にする
+        content = ''
     }
 </script>
 
