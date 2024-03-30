@@ -3,18 +3,24 @@
 	import dayjs from 'dayjs';
 	import { onMount } from "svelte";
 
-    const access_token = sessionStorage.getItem('access_token');
-    const id_token = sessionStorage.getItem('id_token');
+    let access_token: string;
+    let id_token: string;
 	let userInfoRes: AxiosResponse;
     let micropostRes: AxiosResponse;
     let content: string;
 
-    // userinfoエンドポイントにアクセス
     onMount(async () => {
+
+        // セッションストレージからトークンを取得
+        access_token = sessionStorage.getItem('access_token') ?? '';
+        id_token = sessionStorage.getItem('id_token') ?? '';
+
+        // userinfoエンドポイントにアクセス
         const discoverDoc = JSON.parse(sessionStorage.getItem('discoverDoc') ?? '');
         userInfoRes = await axios.get(discoverDoc.userinfo_endpoint, {headers: {Authorization: `Bearer ${access_token}`}});
         console.log(userInfoRes);
 
+        // 投稿一覧取得APIにアクセス
         micropostRes = await axios.get('https://nfk13r40e6.execute-api.ap-northeast-1.amazonaws.com/api/microposts', {headers: {Authorization: `Bearer ${id_token}`}});
         console.log(micropostRes);
     });
