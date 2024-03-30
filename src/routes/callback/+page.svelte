@@ -1,4 +1,5 @@
 <script lang="ts">
+	import { goto } from '$app/navigation';
 	import { error } from '@sveltejs/kit';
 	import axios, { type AxiosResponse } from 'axios';
 	import { onMount } from 'svelte';
@@ -22,6 +23,10 @@
 			code: queryParams.code,
 		});
 
+		// トークンをセッションストレージに保存
+		sessionStorage.setItem('access_token', res.data.access_token);
+		sessionStorage.setItem('id_token', res.data.id_token);
+
 		// userinfoエンドポイントにアクセス
 		const discoverDoc = JSON.parse(sessionStorage.getItem('discoverDoc') ?? '');
 		userInfoRes = await axios.get(discoverDoc.userinfo_endpoint, {headers: {Authorization: `Bearer ${res.data.access_token}`}});
@@ -32,6 +37,7 @@
 {#if userInfoRes}
 	<h1>{userInfoRes.data?.name}</h1>
 	<img src={userInfoRes.data?.picture} alt="facePicture" />
+	<button on:click={() => goto("/microposts")}>投稿</button>
 {:else}
 	<h1>ログインしています...</h1>
 {/if}
