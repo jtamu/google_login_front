@@ -23,6 +23,13 @@
 			code: queryParams.code,
 		});
 
+		// nonceの検証
+		const sessionNonce = sessionStorage.getItem('nonce');
+		const payload = JSON.parse(decodeURIComponent(atob(res.data.id_token.split('.')[1])));
+		if (sessionNonce != payload.nonce) {
+			error(401, { message: 'Invalid nonce parameter.' });
+		}
+
 		// トークンをセッションストレージに保存
 		sessionStorage.setItem('access_token', res.data.access_token);
 		sessionStorage.setItem('id_token', res.data.id_token);
