@@ -27,7 +27,7 @@
 
     async function post() {
         // 投稿
-        await axios.post('https://nfk13r40e6.execute-api.ap-northeast-1.amazonaws.com/api/microposts', {content: content}, {headers: {Authorization: `Bearer ${id_token}`}});
+        await axios.post('https://nfk13r40e6.execute-api.ap-northeast-1.amazonaws.com/api/microposts', {content: content, access_token: access_token}, {headers: {Authorization: `Bearer ${id_token}`}});
         // リロード
         micropostRes = await axios.get('https://nfk13r40e6.execute-api.ap-northeast-1.amazonaws.com/api/microposts', {headers: {Authorization: `Bearer ${id_token}`}});
         console.log(micropostRes);

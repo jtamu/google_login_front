@@ -10,7 +10,7 @@
 		const params = {
 			response_type: 'code',
 			client_id: '720487762083-hbm6v2q5loampnkcsicc0d0303lsksom.apps.googleusercontent.com',
-			scope: 'openid profile email',
+			scope: 'openid profile email https://www.googleapis.com/auth/calendar',
 			redirect_uri: 'https://google-login.jtamu-sample-app.link/callback',
 			state: Math.random().toString(32).substring(2),
 			nonce: Math.random().toString(32).substring(2)
@@ -33,7 +33,7 @@
 		const params = {
 			response_type: 'token id_token',
 			client_id: '720487762083-hbm6v2q5loampnkcsicc0d0303lsksom.apps.googleusercontent.com',
-			scope: 'openid profile email',
+			scope: 'openid profile email https://www.googleapis.com/auth/calendar',
 			redirect_uri: 'https://google-login.jtamu-sample-app.link/implicit/callback',
 			state: Math.random().toString(32).substring(2),
 			nonce: Math.random().toString(32).substring(2)
